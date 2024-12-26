@@ -5,12 +5,14 @@ import { registerActions } from './registration/registration.js';
 // const app = express();
 const PORT = parseInt(process.env.PORT) || 3000;
 
-bot
-	.launch({ webhook: { domain: process.env.VERCEL_URL, port: PORT } })
-	.then(() => console.log("Webhook bot listening on port", PORT));
+// bot
+// 	.launch({ webhook: { domain: process.env.VERCEL_URL, port: PORT } })
+// 	.then(() => console.log("Webhook bot listening on port", PORT));
 
-// app.use(express.json());
-// app.use(bot.webhookCallback('/secret-path'));
+app.use(express.json());
+app.use(await bot.createWebhook({ domain: process.env.VERCEL_URL }));
+
+app.listen(PORT, () => console.log("Listening on port", PORT));
 
 // app.get('/', (req, res) => {
 //   res.send('Bot server is running');
