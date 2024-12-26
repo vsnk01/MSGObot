@@ -1,4 +1,4 @@
-import { bot } from '../src/bot.js';
+import { bot } from '../bot.js';
 
 export default async (req, res) => {
   try {
