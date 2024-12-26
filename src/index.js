@@ -3,9 +3,24 @@ import express from 'express';
 import { registerActions } from './registration/registration.js';
 
 const app = express();
+const PORT = parseInt(process.env.PORT) || 3000;
+
 app.use(express.json());
 app.use(bot.webhookCallback('/secret-path'));
-const PORT = parseInt(process.env.PORT) || 3000;
+
+app.get('/', (req, res) => {
+  res.send('Bot server is running');
+});
+
+app.use((req, res) => {
+  res.status(404).send('Not Found');
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
+});
+
 
 const launchBot = async () => {
   try {
