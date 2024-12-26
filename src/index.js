@@ -11,20 +11,11 @@ const PORT = parseInt(process.env.PORT) || 3000;
 const launchBot = async () => {
   try {
     registerActions();
+    await bot.telegram.setWebhook(`https://${process.env.VERCEL_URL}/secret-path`);
     
-    await bot.launch({
-      webhook: {
-        domain: process.env.VERCEL_URL,
-        hookPath: '/secret-path',
-        tlsOptions: {
-          agent: new https.Agent({
-            keepAlive: true,
-            timeout: 60000,
-            rejectUnauthorized: false
-          })
-        }
-      }
-    });
+    await bot.launch()
+      .then(() => console.log('Bot launched successfully'))
+      .catch((err) => console.error('Error launching bot:', err));
 
     console.log('Bot launched successfully');
   } catch (error) {
