@@ -2,44 +2,48 @@ import { bot } from './bot.js';
 import express from 'express';
 import { registerActions } from './registration/registration.js';
 
-const app = express();
+// const app = express();
 const PORT = parseInt(process.env.PORT) || 3000;
 
-app.use(express.json());
-app.use(bot.webhookCallback('/secret-path'));
+bot
+	.launch({ webhook: { domain: 'msgo-bot.vercel.app', port: PORT } })
+	.then(() => console.log("Webhook bot listening on port", PORT));
 
-app.get('/', (req, res) => {
-  res.send('Bot server is running');
-});
+// app.use(express.json());
+// app.use(bot.webhookCallback('/secret-path'));
 
-app.use((req, res) => {
-  res.status(404).send('Not Found');
-});
+// app.get('/', (req, res) => {
+//   res.send('Bot server is running');
+// });
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something went wrong!');
-});
+// app.use((req, res) => {
+//   res.status(404).send('Not Found');
+// });
+
+// app.use((err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(500).send('Something went wrong!');
+// });
 
 
-const launchBot = async () => {
-  try {
-    registerActions();
-    await bot.telegram.setWebhook(`https://${process.env.VERCEL_URL}/secret-path`);
-    await bot.launch();
+// const launchBot = async () => {
+//   try {
+//     registerActions();
+//     await bot.telegram.setWebhook(`https://${process.env.VERCEL_URL}/secret-path`);
+//     await bot.launch();
 
-    console.log('Bot launched successfully');
-  } catch (error) {
-    console.error('Error launching bot:', error);
-    // Retry after 5 seconds
-    setTimeout(launchBot, 5000);
-  }
-};
+//     console.log('Bot launched successfully');
+//   } catch (error) {
+//     console.error('Error launching bot:', error);
+//     // Retry after 5 seconds
+//     setTimeout(launchBot, 5000);
+//   }
+// };
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  launchBot();
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+//   launchBot();
+// });
 
 
 // app.listen(PORT, () => { console.log(`Server is running on port ${PORT}`); });
