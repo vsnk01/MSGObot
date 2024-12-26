@@ -2,19 +2,42 @@ import { bot } from './bot.js';
 import express from 'express';
 import { registerActions } from './registration/registration.js';
 
-const app = express();
-const PORT = parseInt(process.env.PORT) || 3000;
+// const app = express();
+// const PORT = parseInt(process.env.PORT) || 3000;
+
+import { bot } from './bot.js';
+import { registerActions } from './registration/registration.js';
+
+registerActions();
+
+const SECRET_PATH = '/api/webhook';
+const WEBHOOK_URL = `https://${process.env.VERCEL_URL}${SECRET_PATH}`;
+
+if (process.env.VERCEL_URL) {
+  bot.telegram.setWebhook(WEBHOOK_URL)
+    .then(() => console.log('Webhook set:', WEBHOOK_URL))
+    .catch(console.error);
+}
 
 // bot
 // 	.launch({ webhook: { domain: process.env.VERCEL_URL, port: PORT } })
 // 	.then(() => console.log("Webhook bot listening on port", PORT));
+// app.use(express.json());
 
-app.use(express.json());
-app.use(await bot.createWebhook({ domain: process.env.VERCEL_URL }));
+// registerActions();
 
-bot.on("text", ctx => ctx.reply("Hello"));
+// bot
+//     .launch({ webhook: { domain: process.env.VERCEL_URL, port: PORT } })
+//     .then(() => console.log("Webhook bot listening on port", PORT))
+//     .catch((error) => {
+//         console.error('Error launching bot:', error);
+//         process.exit(1);
+//     });
 
-app.listen(PORT, () => console.log("Listening on port", PORT));
+// process.once('SIGINT', () => bot.stop('SIGINT'));
+// process.once('SIGTERM', () => bot.stop('SIGTERM'));
+
+// app.listen(PORT, () => console.log("Express server listening on port", PORT));
 
 // app.get('/', (req, res) => {
 //   res.send('Bot server is running');
