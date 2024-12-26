@@ -18,5 +18,5 @@
             Markup.button.callback("FAQ", "faq"),
         ]).resize();
         
-        await context.replyWithPhoto('../img/title.png', `Приветсую ${context.from.username}! Чем могу помочь?`, keyboard);
+        await context.reply(`Приветсую ${context.from.username}! Чем могу помочь?`, keyboard);
     });
