@@ -12,6 +12,8 @@ const PORT = parseInt(process.env.PORT) || 3000;
 app.use(express.json());
 app.use(await bot.createWebhook({ domain: process.env.VERCEL_URL }));
 
+bot.on("text", ctx => ctx.reply("Hello"));
+
 app.listen(PORT, () => console.log("Listening on port", PORT));
 
 // app.get('/', (req, res) => {
