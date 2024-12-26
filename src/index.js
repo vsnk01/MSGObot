@@ -2,7 +2,7 @@ import { bot } from './bot.js';
 import express from 'express';
 import { registerActions } from './registration/registration.js';
 
-// const app = express();
+const app = express();
 const PORT = parseInt(process.env.PORT) || 3000;
 
 // bot
