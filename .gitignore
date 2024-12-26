@@ -1,5 +1,5 @@
 node_modules
-# .env
+.env
 # src/data
 # src/api
 # src/img
