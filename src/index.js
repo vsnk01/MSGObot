@@ -16,9 +16,6 @@ if (process.env.VERCEL_URL) {
   bot.telegram.setWebhook(WEBHOOK_URL)
     .then(() => console.log('Webhook set:', WEBHOOK_URL))
     .catch(console.error);
-  
-  bot.launch();
-  console.log('launch');
 }
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
