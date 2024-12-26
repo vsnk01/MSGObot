@@ -5,10 +5,9 @@ import { registerActions } from './registration/registration.js';
 // const app = express();
 // const PORT = parseInt(process.env.PORT) || 3000;
 
-import { bot } from './bot.js';
-import { registerActions } from './registration/registration.js';
-
 registerActions();
+
+console.log('done');
 
 const SECRET_PATH = '/api/webhook';
 const WEBHOOK_URL = `https://${process.env.VERCEL_URL}${SECRET_PATH}`;
@@ -19,7 +18,11 @@ if (process.env.VERCEL_URL) {
     .catch(console.error);
   
   bot.launch();
+  console.log('launch');
 }
+
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
 
 // bot
 // 	.launch({ webhook: { domain: process.env.VERCEL_URL, port: PORT } })
@@ -85,6 +88,3 @@ if (process.env.VERCEL_URL) {
 // app.use((err, req, res, next) => {
 //   console.error(err.stack); res.status(500).send('Something went wrong!');
 // });
-
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
