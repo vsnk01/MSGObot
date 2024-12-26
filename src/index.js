@@ -11,7 +11,7 @@ bot.telegram.setWebhook(`https://${process.env.VERCEL_URL}/secret-path`);
 
 app.get('/', (req, res) => { res.send('Bot is running!')});
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.listen(PORT, () => { console.log(`Server is running on port ${PORT}`); });
 
 bot.launch().then(() => {
