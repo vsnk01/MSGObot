@@ -1,0 +1,11 @@
+{
+    "version": 2,
+    "public": true,
+    "rewrites": [
+      {
+        "source": "/(.*)",
+        "destination": "src/index.ts"
+      }
+    ],
+    "redirects": [{ "source": "/", "destination": "/src", "permanent": false }]
+  }
