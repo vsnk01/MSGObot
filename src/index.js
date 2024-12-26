@@ -18,5 +18,9 @@ bot.launch().then(() => {
   console.log('Bot launched successfully');
 }).catch((err) => { console.error('Error launching bot:', err); });
 
+app.use((err, req, res, next) => {
+  console.error(err.stack); res.status(500).send('Something went wrong!');
+});
+
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
