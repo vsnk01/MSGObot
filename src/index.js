@@ -6,7 +6,7 @@ import { registerActions } from './registration/registration.js';
 const PORT = parseInt(process.env.PORT) || 3000;
 
 bot
-	.launch({ webhook: { domain: 'msgo-bot.vercel.app', port: PORT } })
+	.launch({ webhook: { domain: process.env.VERCEL_URL, port: PORT } })
 	.then(() => console.log("Webhook bot listening on port", PORT));
 
 // app.use(express.json());
