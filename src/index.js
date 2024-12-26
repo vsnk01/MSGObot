@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(bot.webhookCallback('/secret-path')); // Настройка webhook
 bot.telegram.setWebhook(`https://${process.env.VERCEL_URL}/secret-path`); // Запуск сервера const
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.listen(PORT, () => { console.log(`Server is running on port ${PORT}`); });
 
 bot.launch().then(() => {
