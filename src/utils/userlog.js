@@ -1,27 +1,38 @@
-import fs from 'fs';
-import path from 'path';
-const FILEPATH = path.join(process.cwd(),'src/data/applicants.json');
+// import fs from 'fs';
+// import path from 'path';
+import { redis } from './kvClient.js';
 
-export const getUserData = () => {
-    if (fs.existsSync(FILEPATH)) {
-        const rawData = fs.readFileSync(FILEPATH, 'utf-8');
+// const FILEPATH = path.join(process.cwd(),'src/data/applicants.json');
 
-        if (rawData) {
-            const data = JSON.parse(rawData);
+export const getUsersData = async () => {
+    const keys = redis.keys('applicant:*');
 
-            if (Array.isArray(data)) {
-                return data;
-            } else {
-                return [ data ];
-            }
-        }
+    const data = [];
+
+    for (const key of keys) {
+        const value = await redis.get(key);
+        data.push({ key, value });
     }
 
-    return [];
+    // if (fs.existsSync(FILEPATH)) {
+    //     const rawData = fs.readFileSync(FILEPATH, 'utf-8');
+
+    //     if (rawData) {
+    //         const data = JSON.parse(rawData);
+
+    //         if (Array.isArray(data)) {
+    //             return data;
+    //         } else {
+    //             return [ data ];
+    //         }
+    //     }
+    // }
+
+    return data;
 } 
 
-export const saveUserData = (context, query, date) => {
-    const users = getUserData();
+export const saveUserData = async (context, query, date) => {
+    // const users = getUserData();
 
     const userLog = {
         userId: context.from.id,
@@ -30,8 +41,10 @@ export const saveUserData = (context, query, date) => {
         date,
     };
 
-    users.push(userLog);
+    await redis.set(`applicant:${userLog.userId}`, JSON.stringify(userLog));
 
-    fs.writeFileSync(FILEPATH, JSON.stringify(users, null, 2), 'utf-8');
+    // users.push(userLog);
+
+    // fs.writeFileSync(FILEPATH, JSON.stringify(users, null, 2), 'utf-8');
 }
 
