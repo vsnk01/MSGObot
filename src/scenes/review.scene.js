@@ -1,8 +1,5 @@
 import { getUserData } from "../utils/userlog.js";
 import { createApplication } from "../utils/createApplication.js";
-import { Markup, Scenes } from "telegraf";
-import { bot } from '../bot.js';
-
 
 export const reviewScene = new Scenes.BaseScene('REVIEW_APPLICATIONS_SCENE');
 

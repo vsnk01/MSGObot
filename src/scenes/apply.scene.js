@@ -1,8 +1,6 @@
 import { Markup, Scenes } from "telegraf";
-import { questions } from "../someData/application.js";
+import { questions } from "../api/application.js";
 import { saveUserData } from "../utils/userlog.js";
-import { bot } from '../bot.js';
-import { ADMIN } from '../bot.js';
 import { createTimer, proceed } from "../utils/timeout.js";
 import { createApplication } from "../utils/createApplication.js";
 
