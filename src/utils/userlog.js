@@ -1,6 +1,6 @@
 // import fs from 'fs';
 // import path from 'path';
-import { redis } from './kvClient.js';
+import { redis } from '../kvClient.js';
 
 // const FILEPATH = path.join(process.cwd(),'src/data/applicants.json');
 
