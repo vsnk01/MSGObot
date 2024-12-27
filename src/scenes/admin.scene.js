@@ -7,14 +7,7 @@ export const adminScene = new Scenes.BaseScene('ADMIN_SCENE');
 adminScene.enter(async (context) => {
     context.session.timeout = createTimer(context);
 
-    adminScene.action('review', proceed((context) => {
-        try {
-            context.answerCbQuery();
-            context.scene.enter('REVIEW_APPLICATIONS_SCENE');
-        } catch (error) {
-            context.reply(`${placeholder.errorText}: ${error.message}`);
-        }
-    }));
+    adminScene.action('review', proceed((context) => context.scene.enter('REVIEW_APPLICATIONS_SCENE')));
         
     adminScene.action('news', proceed((context) => {
         context.answerCbQuery();
