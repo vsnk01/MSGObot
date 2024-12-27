@@ -8,13 +8,13 @@ adminScene.enter(async (context) => {
     context.session.timeout = createTimer(context);
 
     adminScene.action('review', proceed((context) => {
-        context.answerCbQuery();
         context.scene.enter('REVIEW_APPLICATIONS_SCENE');
+        context.answerCbQuery();
     }));
         
     adminScene.action('news', proceed((context) => {
-        context.answerCbQuery();
         context.reply(placeholder.errorText);
+        context.answerCbQuery();
     }));
 
     const keyboard = Markup.inlineKeyboard([
