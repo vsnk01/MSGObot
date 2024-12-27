@@ -1,17 +1,17 @@
-###MSGO bot v.1.0.1
+### MSGO bot v.1.0.1
 
 _____________________________________________________________
 
-##TO FIX:
+## TO FIX:
 
-_-✅ Date validation_
-_-✅ Spacing_
-_-🕙Implement Partnership button_
-_-✅ Fix 'undefined' user issue_
+- _✅ Date validation_
+- _✅ Spacing_
+- _🕙Implement Partnership button_
+- _✅ Fix 'undefined' user issue_
 
 _____________________________________________________________
 
-#About:
+# About:
 
 Greetings!
 This small non-commercial project was developed for a friend of mine - the member of MSGO team,
@@ -20,11 +20,11 @@ The goal was to develop a telegram bot for easy and fast way joining MSGO team.
 
 _____________________________________________________________
 
-#Tools:
+# Tools:
 
-_- JavaScript_
-_- Telegraf v4_
-_- Express_
-_- Deployed on Vercel_
+- _JavaScript_
+- _Telegraf v4_
+- _Express_
+- _Deployed on Vercel_
 
 _____________________________________________________________
