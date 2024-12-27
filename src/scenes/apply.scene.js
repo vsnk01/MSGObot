@@ -48,7 +48,7 @@ const saveAnswer = async (context, answer) => {
       };
     } else {
       await sendApplication(context.session.answers, context);
-      await context.enter("USER_SCENE")
+      await context.scene.enter("USER_SCENE")
       context.session = null;
     }
   } catch (error) {

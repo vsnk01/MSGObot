@@ -18,4 +18,4 @@ faqScene.enter(async (context) => {
 faqScene.action("about", async (context) => context.reply(placeholder.aboutFAQText));
 faqScene.action("tools", async (context) => context.reply(placeholder.toolsFAQText));
 faqScene.action("aboutBot", async (context) => context.reply(placeholder.aboutBotFAQText));
-faqScene.action("leave", async (context) => context.enter("USER_SCENE"));
+faqScene.action("leave", async (context) => context.scene.enter("USER_SCENE"));
