@@ -64,8 +64,8 @@ applicationScene.on('message', proceed(async (context) => {
 applicationScene.on('callback_query', proceed(async (context) => {
   const answer = context.callbackQuery.data;
   await saveAnswer(context, answer);
-  context.answerCbQuery();
   context.editMessageReplyMarkup();
+  context.answerCbQuery();
 }));
 
 const askQuestion = async (currentQuestion, context) => {

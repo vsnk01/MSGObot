@@ -9,12 +9,12 @@ adminScene.enter(async (context) => {
 
     adminScene.action('review', proceed((context) => {
         context.scene.enter('REVIEW_APPLICATIONS_SCENE');
-        context.answerCbQuery();
+        // context.answerCbQuery();
     }));
         
     adminScene.action('news', proceed((context) => {
         context.reply(placeholder.errorText);
-        context.answerCbQuery();
+        // context.answerCbQuery();
     }));
 
     const keyboard = Markup.inlineKeyboard([

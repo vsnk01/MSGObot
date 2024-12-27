@@ -107,16 +107,16 @@ dialogScene.enter(async (context) => {
 
         dialogScene.action('noExamples', async (context) => {
             await bot.telegram.sendMessage(userId, placeholder.rejectExamplesText);
-            await context.answerCbQuery();
             await context.scene.leave();
             context.session = null;
+            await context.answerCbQuery();
         });
 
         dialogScene.action('notRelevant', async (context) => {
             await bot.telegram.sendMessage(userId, placeholder.rejectRelevantText);
-            await context.answerCbQuery();
             await context.scene.leave();
             context.session = null;
+            await context.answerCbQuery();
         });
 
         await context.answerCbQuery();
@@ -124,9 +124,9 @@ dialogScene.enter(async (context) => {
 
     dialogScene.action('warn', async (context) => {
         await bot.telegram.sendMessage(userId, placeholder.warnText);
-        await context.answerCbQuery();
         await context.scene.leave();
         context.session = null;
+        await context.answerCbQuery();
     });
 
     await context.reply(`What do you want to say to ${username}`, keyboard);
