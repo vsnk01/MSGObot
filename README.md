@@ -2,15 +2,6 @@
 
 _____________________________________________________________
 
-## TO FIX:
-
-- _✅ Date validation_
-- _✅ Spacing_
-- _🕙Implement Partnership button_
-- _✅ Fix 'undefined' user issue_
-
-_____________________________________________________________
-
 # About:
 
 Greetings!
@@ -26,5 +17,14 @@ _____________________________________________________________
 - _Telegraf v4_
 - _Express_
 - _Deployed on Vercel_
+
+_____________________________________________________________
+
+### TO FIX:
+
+- _✅ Date validation_
+- _✅ Spacing_
+- _🕙Implement Partnership button_
+- _✅ Fix 'undefined' user issue_
 
 _____________________________________________________________
