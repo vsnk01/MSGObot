@@ -48,7 +48,7 @@ const enterCustomDialog = async (context) => {
         [placeholder.endDialogButtonText]
     ]);
 
-    await context.reply(`Your next messages will be sent directly to @${username}`, customKeyboard);
+    await context.reply(`Your next messages will be sent directly to @${context.session.user.username}`, customKeyboard);
     await bot.telegram.sendMessage(userId, placeholder.joinChatText('MSGO'));
     // bot.hears(/.*/, async (userContext) => {
     //     if (userContext.from.id === userId
