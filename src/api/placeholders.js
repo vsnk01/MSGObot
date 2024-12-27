@@ -1,7 +1,5 @@
 // Error placeholder
 
-import { join } from "telegraf/format";
-
 export const errorText = `Произошла ошибка. Попробуйте позже или обратитесь к администратору @fukuro_dz`;
 
 // User scene placeholder

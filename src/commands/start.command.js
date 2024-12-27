@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import { Markup } from 'telegraf';
 
 dotenv.config();
 

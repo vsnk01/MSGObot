@@ -48,11 +48,9 @@ const saveAnswer = async (context, answer) => {
       };
     } else {
       await sendApplication(context.session.answers, context);
-      await context.scene.enter("USER_SCENE")
-      context.session = null;
     }
   } catch (error) {
-    context.reply(`${placeholder.errorText}: ${error.message}`);
+    await context.reply(`${placeholder.errorText}: ${error.message}`);
   }
 };
 
@@ -64,8 +62,8 @@ applicationScene.on('message', proceed(async (context) => {
 applicationScene.on('callback_query', proceed(async (context) => {
   const answer = context.callbackQuery.data;
   await saveAnswer(context, answer);
-  context.editMessageReplyMarkup();
-  context.answerCbQuery();
+  await context.answerCbQuery();
+  await context.editMessageReplyMarkup();
 }));
 
 const askQuestion = async (currentQuestion, context) => {
@@ -89,7 +87,7 @@ const askQuestion = async (currentQuestion, context) => {
   }
 };
 
-const sendApplication = (answers, context) => {
+const sendApplication = async (answers, context) => {
   try {
     let textMessage = placeholder.applicationHeader(context.from.username);
 
@@ -98,16 +96,17 @@ const sendApplication = (answers, context) => {
           `${answer.question.text}:\n  ${answer.answer}\n\n`;
     });
 
-    saveUserData(context, textMessage, new Date());
-
     if (textMessage) {
       const user = { userId: context.from.id, username: context.from.username };
-      createApplication(user, textMessage);
+      await saveUserData(context, textMessage, new Date());
+      await createApplication(user, textMessage);
     }
 
-    context.reply(placeholder.thankYouText);
+    await context.reply(placeholder.thankYouText);
   } catch(error) {
-    context.reply(`${placeholder.errorText}: ${error.message}`);
+    await context.reply(`${placeholder.errorText}: ${error.message}`);
     console.log(error.message);
   }
+
+  return context.scene.enter('USER_SCENE');
 };

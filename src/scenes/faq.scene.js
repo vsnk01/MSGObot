@@ -11,11 +11,26 @@ faqScene.enter(async (context) => {
         [Markup.button.callback("Назад", "leave")]
     ]);
 
-    context.reply(placeholder.FAQButtonText, keyboard);
+    await context.reply(placeholder.FAQButtonText, keyboard);
 });
 
 
-faqScene.action("about", async (context) => context.reply(placeholder.aboutFAQText));
-faqScene.action("tools", async (context) => context.reply(placeholder.toolsFAQText));
-faqScene.action("aboutBot", async (context) => context.reply(placeholder.aboutBotFAQText));
-faqScene.action("leave", async (context) => context.scene.enter("USER_SCENE"));
+faqScene.action("about", async (context) => {
+    await context.answerCbQuery();
+    await context.reply(placeholder.aboutFAQText)
+});
+
+faqScene.action("tools", async (context) => {
+    await context.answerCbQuery();
+    await context.reply(placeholder.toolsFAQText)
+});
+
+faqScene.action("aboutBot", async (context) => {
+    await context.answerCbQuery();
+    await context.reply(placeholder.aboutBotFAQText)
+});
+
+faqScene.action("leave", async (context) => {
+    await context.answerCbQuery();
+    await context.scene.enter("USER_SCENE")
+});

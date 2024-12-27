@@ -8,6 +8,7 @@ registerActions();
 console.log('done');
 
 const SECRET_PATH = `/${token}`;
+// eslint-disable-next-line no-undef
 const WEBHOOK_URL = `https://${process.env.VERCEL_URL}${SECRET_PATH}`;
 
 const app = express();

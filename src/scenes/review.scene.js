@@ -12,6 +12,6 @@ reviewScene.enter(async (context) => {
 
     for (const user of users) {
         const query = user.query;
-        createApplication(user, query);
+        await createApplication(user, query);
     }
 });
