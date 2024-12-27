@@ -48,7 +48,7 @@ dialogScene.enter(async (context) => {
                 if (context.message.text === 'End dialog') {
                     context.session.dialogActive = false;
                     await context.reply('Dialog ended', Markup.removeKeyboard());
-                    await bot.telegram.sendMessage(userId, 'MSGO left the chat');
+                    await bot.telegram.sendMessage(userId, 'MSGO left the chat', Markup.removeKeyboard());
                     context.session = null;
                     return context.scene.leave();
                 }
@@ -60,23 +60,23 @@ dialogScene.enter(async (context) => {
 
     dialogScene.action('approve', async (context) => {
         await bot.telegram.sendMessage(userId, 'Approved');
-        context.session = null;
         await context.answerCbQuery();
         await context.scene.leave();
+        context.session = null;
     });
 
     dialogScene.action('wait', async (context) => {
         await bot.telegram.sendMessage(userId, 'Wait');
-        context.session = null;
         await context.answerCbQuery();
         await context.scene.leave();
+        context.session = null;
     });
 
     dialogScene.action('requestExamples', async (context) => {
         await bot.telegram.sendMessage(userId, 'Request examples');
-        context.session = null;
         await context.answerCbQuery();
         context.scene.leave();
+        context.session = null;
     });
 
     dialogScene.action('reject', async (context) => {
@@ -89,16 +89,16 @@ dialogScene.enter(async (context) => {
 
         dialogScene.action('noExamples', async (context) => {
             await bot.telegram.sendMessage(userId, 'No examples');
-            context.session = null;
             await context.answerCbQuery();
             await context.scene.leave();
+            context.session = null;
         });
 
         dialogScene.action('notRelevant', async (context) => {
             await bot.telegram.sendMessage(userId, 'Not relevant');
-            context.session = null;
             await context.answerCbQuery();
             await context.scene.leave();
+            context.session = null;
         });
 
         await context.answerCbQuery();
@@ -106,9 +106,9 @@ dialogScene.enter(async (context) => {
 
     dialogScene.action('warn', async (context) => {
         await bot.telegram.sendMessage(userId, 'That is a warning');
-        context.session = null;
         await context.answerCbQuery();
         await context.scene.leave();
+        context.session = null;
     });
 
     await context.reply(`What do you want to say to ${username}`, keyboard);

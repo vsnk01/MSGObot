@@ -48,8 +48,8 @@ const saveAnswer = async (context, answer) => {
       };
     } else {
       await sendApplication(context.session.answers, context);
-      context.session = null;
       await context.scene.leave();
+      context.session = null;
     }
   } catch (error) {
     context.reply(`An error occured while asking a question: ${error.message}`);

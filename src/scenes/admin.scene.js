@@ -17,6 +17,6 @@ adminScene.enter(async (context) => {
                 Markup.button.callback("Ответить на заявку", "reply"),
                 Markup.button.callback("Создать рассылку", "news"),
             ]).resize();
-    
+
     await context.reply(`Здравствуйте начальниха ${context.from.username}`, keyboard);
 });
