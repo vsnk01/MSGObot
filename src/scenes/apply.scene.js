@@ -3,7 +3,7 @@ import { questions } from "../api/application.js";
 import { saveUserData } from "../utils/userlog.js";
 import { createTimer, proceed } from "../utils/timeout.js";
 import { createApplication } from "../utils/createApplication.js";
-import * as placeholder from "../api/placeholder.js";
+import * as placeholder from "../api/placeholders.js";
 
 export const applicationScene = new Scenes.BaseScene("APPLICATION_SCENE");
 
