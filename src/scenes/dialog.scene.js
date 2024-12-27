@@ -4,16 +4,16 @@ import * as placeholder from '../api/placeholders.js';
 
 export const dialogScene = new Scenes.BaseScene('DIALOG_SCENE');
 
-bot.on('message', async (context) => {
+dialogScene.on('message', async (context) => {
 
-    console.log(context.session.adminId);
-    console.log(context.session.user.userId);
+    // console.log(context.session.adminId);
+    // console.log(context.session.user.userId);
 
 
     if (context.session.dialogActive) {
-        if (context.from.id === context.session.user.userId) {
-            await bot.telegram.sendMessage(context.session.adminId, context.message.text);
-        }
+        // if (context.from.id === context.session.user.userId) {
+        //     await bot.telegram.sendMessage(context.session.adminId, context.message.text);
+        // }
 
         if (context.from.id === context.session.adminId) {
             if (context.message.text === placeholder.endDialogButtonText) {
@@ -53,19 +53,19 @@ const enterCustomDialog = async (context) => {
     await bot.telegram.sendMessage(userId, placeholder.joinChatText('MSGO'));
 
     
-    // bot.hears(/.*/, async (userContext) => {
-    //     if (userContext.from.id === userId
-    //         && context.session.dialogActive) {
-    //         await bot.telegram.sendMessage(context.session.adminId, `Message from: @${userContext.from.username}\n\n ${userContext.message.text}`);   
-    //         // if (userContext.message.text === 'End chat') {
-    //         //     context.session.dialogActive = false;
-    //         //     await  userContext.reply('Chat ended', Markup.removeKeyboard());
-    //         //     await bot.telegram.sendMessage(admin, `@${userContext.from.username} left the chat`, Markup.removeKeyboard());
-    //         //     userContext.session = null;
-    //         //     return userContext.scene.leave();
-    //         // }
-    //     }
-    // });
+    bot.hears(/.*/, async (userContext) => {
+        if (userContext.from.id === userId
+            && context.session.dialogActive) {
+            await bot.telegram.sendMessage(context.session.adminId, `Message from: @${userContext.from.username}\n\n ${userContext.message.text}`);   
+            // if (userContext.message.text === 'End chat') {
+            //     context.session.dialogActive = false;
+            //     await  userContext.reply('Chat ended', Markup.removeKeyboard());
+            //     await bot.telegram.sendMessage(admin, `@${userContext.from.username} left the chat`, Markup.removeKeyboard());
+            //     userContext.session = null;
+            //     return userContext.scene.leave();
+            // }
+        }
+    });
 };
 
 dialogScene.enter(async (context) => {
