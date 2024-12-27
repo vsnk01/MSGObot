@@ -1,5 +1,4 @@
 import { bot } from './bot.js';
-import cors from 'cors'; 
 import express from 'express';
 import { token } from './connections/token.connection.js';
 import { registerActions } from './registration/registration.js';
@@ -12,7 +11,6 @@ const SECRET_PATH = `/${token}`;
 const WEBHOOK_URL = `https://${process.env.VERCEL_URL}${SECRET_PATH}`;
 
 const app = express();
-app.use(cors());
 app.use(express.json());
 
 app.post(SECRET_PATH, (req, res) => {
