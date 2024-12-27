@@ -43,7 +43,6 @@ dialogScene.on('message', async (context) => {
 
 const enterCustomDialog = async (context) => {
     context.session.adminId = context.from.id;
-    context.session.dialogActive = true;
 
     const customKeyboard = Markup.keyboard([
         [placeholder.endDialogButtonText]
@@ -52,9 +51,10 @@ const enterCustomDialog = async (context) => {
     await context.reply(`Your next messages will be sent directly to @${context.session.user.username}`, customKeyboard);
     await bot.telegram.sendMessage(userId, placeholder.joinChatText('MSGO'));
 
+    context.session.dialogActive = true;
     
     bot.hears(/.*/, async (userContext) => {
-        if (userContext.from.id === userId
+        if (userContext.from.id === context.session.user.userId
             && context.session.dialogActive) {
             await bot.telegram.sendMessage(context.session.adminId, `Message from: @${userContext.from.username}\n\n ${userContext.message.text}`);   
             // if (userContext.message.text === 'End chat') {
