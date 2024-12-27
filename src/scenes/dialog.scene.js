@@ -6,14 +6,7 @@ export const dialogScene = new Scenes.BaseScene('DIALOG_SCENE');
 
 dialogScene.on('message', async (context) => {
 
-    // console.log(context.session.adminId);
-    // console.log(context.session.user.userId);
-
-
     if (context.session.dialogActive) {
-        // if (context.from.id === context.session.user.userId) {
-        //     await bot.telegram.sendMessage(context.session.adminId, context.message.text);
-        // }
 
         if (context.from.id === context.session.adminId) {
             if (context.message.text === placeholder.endDialogButtonText) {
@@ -26,20 +19,6 @@ dialogScene.on('message', async (context) => {
         }
     }
 });
-    // if (adminContext.from.id === context.session.adminId
-    //     && context.session.dialogActive) {
-
-    //     if (adminContext.message.text === placeholder.endChatButtonText) {
-    //         adminContext.session.dialogActive = false;
-    //         await adminContext.reply('Dialog ended', Markup.removeKeyboard());
-    //         await bot.telegram.sendMessage(userId, placeholder.leftChatText('MSGO'));
-    //         context.session = null;
-    //         return context.scene.leave();
-    //     }
-
-    //     await bot.telegram.sendMessage(userId, adminContext.message.text);
-    // }
-
 
 const enterCustomDialog = async (context) => {
     context.session.adminId = context.from.id;
@@ -57,13 +36,6 @@ const enterCustomDialog = async (context) => {
         if (userContext.from.id === context.session.user.userId
             && context.session.dialogActive) {
             await bot.telegram.sendMessage(context.session.adminId, `Message from: @${userContext.from.username}\n\n ${userContext.message.text}`);   
-            // if (userContext.message.text === 'End chat') {
-            //     context.session.dialogActive = false;
-            //     await  userContext.reply('Chat ended', Markup.removeKeyboard());
-            //     await bot.telegram.sendMessage(admin, `@${userContext.from.username} left the chat`, Markup.removeKeyboard());
-            //     userContext.session = null;
-            //     return userContext.scene.leave();
-            // }
         }
     });
 };
@@ -96,17 +68,12 @@ dialogScene.action('sendCustom', async (context) => {
 dialogScene.action('approve2', async (context) => {
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.approve2Text);
     await enterCustomDialog(context);
-    // await context.answerCbQuery();
-    // await context.scene.leave();
-    // context.session = null;
 });
 
 dialogScene.action('approve3', async (context) => {
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.approve3Text);
     await enterCustomDialog(context);
     await context.answerCbQuery();
-    // await context.scene.leave();
-    // context.session = null;
 });
 
 dialogScene.action('wait', async (context) => {
@@ -119,8 +86,6 @@ dialogScene.action('requestExamples', async (context) => {
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.requestExamplesText);
     await enterCustomDialog(context);
     await context.answerCbQuery();
-    // context.scene.leave();
-    // context.session = null;
 });
 
 dialogScene.action('reject', async (context) => {
