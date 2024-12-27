@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { Markup, Scenes } from "telegraf";
 import { questions } from "../api/application.js";
 import { saveUserData } from "../utils/userlog.js";
