@@ -41,15 +41,16 @@ dialogScene.on('message', async (context) => {
 });
 
 const enterCustomDialog = async (context) => {
-    context.session.dialogActive = true;
     context.session.adminId = context.from.id;
-
+    
     const customKeyboard = Markup.keyboard([
         [placeholder.endDialogButtonText]
     ]);
 
     await context.reply(`Your next messages will be sent directly to @${context.session.user.username}`, customKeyboard);
     await bot.telegram.sendMessage(userId, placeholder.joinChatText('MSGO'));
+
+    context.session.dialogActive = true;
     // bot.hears(/.*/, async (userContext) => {
     //     if (userContext.from.id === userId
     //         && context.session.dialogActive) {
