@@ -30,7 +30,7 @@ const saveAnswer = async (context, answer) => {
       try {
         context.session.answers[context.session.currentQuestion].question.check(answer);
       } catch (error) {
-        throw new Error(`User sent the wrong data: ${error.message}`);
+        throw new Error(error.message);
       }
     }
 
@@ -52,7 +52,7 @@ const saveAnswer = async (context, answer) => {
       context.session = null;
     }
   } catch (error) {
-    context.reply(`An error occured while asking a question: ${error.message}`);
+    context.reply(`${placeholder.errorText}: ${error.message}`);
   }
 };
 
@@ -91,7 +91,7 @@ const askQuestion = async (currentQuestion, context) => {
 
 const sendApplication = (answers, context) => {
   try {
-    let textMessage = `New Application from @${context.from.username}\n\n`;
+    let textMessage = placeholder.applicationHeader(context.from.username);
 
     answers.forEach((answer) => {
       textMessage +=
@@ -107,9 +107,7 @@ const sendApplication = (answers, context) => {
 
     context.reply(placeholder.thankYouText);
   } catch(error) {
-    context.reply(
-      `Something went wrong during forming your application form. Please, try later ${error}`
-    );
-    console.log(error);
+    context.reply(`${placeholder.errorText}: ${error.message}`);
+    console.log(error.message);
   }
 };
