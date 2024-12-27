@@ -6,7 +6,7 @@ dotenv.config();
 
 export const startCommand = (async (context) => {
     const userId = context.from.id;
-    const photoPath = 'https://msgo-bot.vercel.app/title.png';
+    const photoPath = 'https://imgur.com/a/76gQXhS.png';
 
     try {
         await context.replyWithPhoto(photoPath, { caption: 'test image' });
