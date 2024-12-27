@@ -6,8 +6,6 @@ export const createApplication = async (user, text) => {
     const keyboard = Markup.inlineKeyboard([
         Markup.button.callback('Answer', `answer_${user.userId}`)
     ]);
-
-    console.log(user);
     
     await bot.telegram.sendMessage(ADMIN, text, keyboard);
     

@@ -31,15 +31,25 @@ export const questions = [
             },
             {
                 id: 'date',
-                text: 'Дата рождения в формате хх/хх/хххх',
+                text: 'Дата рождения в формате хх/хх/хххх или  хх.хх.хххх',
                 check: (date) => {
-                    const [day, month, year] = date.split('/').map(num => Number(num));
+                    const UPPER_DATE_LIMIT  = new Date().getFullYear();
+                    const BOTTOM_DATE_LIMIT = 1900;
+
+                    const [day, month, year] = date.split(/[/.]/)
+                    .map(num => Number(num.trim()));
+                    
                     const parseDate = new Date(year, month - 1, day);
                                         
                     if (parseDate.getFullYear() !== year
                         || parseDate.getMonth() !== month - 1
                         || parseDate.getDate() !== day) {
                         throw new Error('Date should have format: xx.xx.xx');
+                    }
+
+                    if (parseDate.getFullYear() > UPPER_DATE_LIMIT
+                        || parseDate.getFullYear() < BOTTOM_DATE_LIMIT) {
+                        throw new Error('Your date either too bigger than current year or smaller than 1900');
                     }
                 }
             },

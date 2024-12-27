@@ -14,7 +14,6 @@ faqScene.enter(async (context) => {
     await context.reply(placeholder.FAQButtonText, keyboard);
 });
 
-
 faqScene.action("about", async (context) => {
     await context.answerCbQuery();
     await context.reply(placeholder.aboutFAQText)

@@ -9,18 +9,12 @@ adminScene.action('review', proceed(async (context) => {
     await context.scene.enter("REVIEW_APPLICATIONS_SCENE");
 }));
 
-adminScene.action('news', proceed(async (context) => {
-    await context.answerCbQuery();
-    await context.reply(placeholder.errorText)
-}));
-
 adminScene.enter(async (context) => {
     context.session.timeout = createTimer(context);
 
     const keyboard = Markup.inlineKeyboard([
-                Markup.button.callback(placeholder.reviewButtonText, "review"),
-                Markup.button.callback(placeholder.createNewsButtonText, "news"),
-            ]).resize();
+        Markup.button.callback(placeholder.reviewButtonText, "review")
+    ]);
 
     await context.reply(placeholder.adminSceneText(context.from.username), keyboard);
 });

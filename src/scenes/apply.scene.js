@@ -115,6 +115,7 @@ applicationScene.leave((context) => {
   if (context.session?.timeout) {
     clearTimeout(context.session.timeout);
   }
+
   context.session.currentQuestion = null;
   context.session.answers = null;
 });

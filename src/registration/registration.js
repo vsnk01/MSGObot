@@ -19,8 +19,6 @@ const scenes = [
 ]
 
 export const registerActions = () => {
-    // register scenes
-    
     const stage = new Scenes.Stage(scenes);
     bot.use(session());
     bot.use(stage.middleware());

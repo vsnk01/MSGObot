@@ -21,9 +21,9 @@
         context.session.timeout = createTimer(context);
     
         const keyboard = Markup.inlineKeyboard([
-            Markup.button.callback(placeholder.applyButtonText, "apply"),
-            Markup.button.callback(placeholder.partnershipButtonText, "partnership"),
-            Markup.button.callback(placeholder.FAQButtonText, "faq"),
+            [Markup.button.callback(placeholder.applyButtonText, "apply")],
+            [Markup.button.callback(placeholder.partnershipButtonText, "partnership")],
+            [Markup.button.callback(placeholder.FAQButtonText, "faq")],
         ]).resize();
         
         await context.reply(placeholder.userSceneText(context.from.username), keyboard);
