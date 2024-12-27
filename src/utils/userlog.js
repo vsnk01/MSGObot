@@ -1,8 +1,4 @@
-// import fs from 'fs';
-// import path from 'path';
 import { redis } from '../kvClient.js';
-
-// const FILEPATH = path.join(process.cwd(),'src/data/applicants.json');
 
 export const getUsersData = async () => {
     const users = [];
@@ -16,9 +12,9 @@ export const getUsersData = async () => {
             console.log(value);
 
             if (value) {
-                const parsedValue = JSON.parse(value);
-                console.log(parsedValue);
-                users.push(parsedValue);
+                // const parsedValue = JSON.parse(value);
+                // console.log(parsedValue);
+                users.push(value);
             }
         }
 
@@ -53,6 +49,10 @@ export const saveUserData = async (context, query, date) => {
             query,
             date,
         };
+
+        if (redis.get(`applicant:${userLog.userId}`)) {
+            redis.del(`applicant:${userLog.userId}`);
+        }
     
         await redis.set(`applicant:${userLog.userId}`, JSON.stringify(userLog));
         console.log('User data saved');
