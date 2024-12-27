@@ -1,5 +1,6 @@
 import { Markup, Scenes } from "telegraf";
 import { bot } from '../bot.js';
+import * as placeholder from '../api/placeholders.js';
 
 export const dialogScene = new Scenes.BaseScene('DIALOG_SCENE');
 
@@ -59,21 +60,21 @@ dialogScene.enter(async (context) => {
     });
 
     dialogScene.action('approve', async (context) => {
-        await bot.telegram.sendMessage(userId, 'Approved');
+        await bot.telegram.sendMessage(userId, placeholder.approveText);
         await context.answerCbQuery();
         await context.scene.leave();
         context.session = null;
     });
 
     dialogScene.action('wait', async (context) => {
-        await bot.telegram.sendMessage(userId, 'Wait');
+        await bot.telegram.sendMessage(userId, placeholder.waitText);
         await context.answerCbQuery();
         await context.scene.leave();
         context.session = null;
     });
 
     dialogScene.action('requestExamples', async (context) => {
-        await bot.telegram.sendMessage(userId, 'Request examples');
+        await bot.telegram.sendMessage(userId, placeholder.requestExamplesText);
         await context.answerCbQuery();
         context.scene.leave();
         context.session = null;
@@ -88,14 +89,14 @@ dialogScene.enter(async (context) => {
         await context.reply(`Choose the reason of rejection for ${username}`, rejectKeyboard);
 
         dialogScene.action('noExamples', async (context) => {
-            await bot.telegram.sendMessage(userId, 'No examples');
+            await bot.telegram.sendMessage(userId, placeholder.rejectExamplesText);
             await context.answerCbQuery();
             await context.scene.leave();
             context.session = null;
         });
 
         dialogScene.action('notRelevant', async (context) => {
-            await bot.telegram.sendMessage(userId, 'Not relevant');
+            await bot.telegram.sendMessage(userId, placeholder.rejectText);
             await context.answerCbQuery();
             await context.scene.leave();
             context.session = null;
@@ -105,7 +106,7 @@ dialogScene.enter(async (context) => {
     });
 
     dialogScene.action('warn', async (context) => {
-        await bot.telegram.sendMessage(userId, 'That is a warning');
+        await bot.telegram.sendMessage(userId, placeholder.warnText);
         await context.answerCbQuery();
         await context.scene.leave();
         context.session = null;
