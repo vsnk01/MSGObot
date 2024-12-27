@@ -7,7 +7,8 @@ export const reviewScene = new Scenes.BaseScene('REVIEW_APPLICATIONS_SCENE');
 reviewScene.enter(async (context) => {
     await context.reply('Here is the most recent applications');
 
-    const users = getUsersData();
+    const users = await getUsersData();
+    console.log(users);
 
     for (const user of users) {
         const query = user.query;

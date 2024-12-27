@@ -12,12 +12,20 @@ export const getUsersData = async () => {
     
         for (const key of keys) {
             const value = await redis.get(key);
-            users.push(JSON.parse(value));
+
+            if (value) {
+                const parsedValue = JSON.parse(value);
+            users.push(parsedValue);
+            }
         }
 
     } catch (error) {
         console.log(error.message); 
     }
+
+    return users;
+} 
+
     // if (fs.existsSync(FILEPATH)) {
     //     const rawData = fs.readFileSync(FILEPATH, 'utf-8');
 
@@ -31,9 +39,6 @@ export const getUsersData = async () => {
     //         }
     //     }
     // }
-
-    return data;
-} 
 
 export const saveUserData = async (context, query, date) => {
     // const users = getUserData();
