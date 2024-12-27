@@ -9,12 +9,15 @@ export const getUsersData = async () => {
 
     try {
         const keys = await redis.keys('applicant:*');
+        console.log(keys);
     
         for (const key of keys) {
             const value = await redis.get(key);
+            console.log(value);
 
             if (value) {
                 const parsedValue = JSON.parse(value);
+                console.log(parsedValue);
                 users.push(parsedValue);
             }
         }
