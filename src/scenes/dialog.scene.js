@@ -91,7 +91,7 @@ dialogScene.action('approve2', async (context) => {
     const { userId } = context.scene.state;
     await bot.telegram.sendMessage(userId, placeholder.approve2Text);
     await enterCustomDialog(context);
-    await context.answerCbQuery();
+    // await context.answerCbQuery();
     // await context.scene.leave();
     // context.session = null;
 });
