@@ -1,20 +1,17 @@
 import dotenv from 'dotenv';
 import * as placeholder from '../api/placeholders.js';
-import { Markup } from 'telegraf';
+import * as images from '../img/image.links.js';
 
 dotenv.config();
 
 export const startCommand = (async (context) => {
     const userId = context.from.id;
-    const photoPath = 'https://imgur.com/a/76gQXhS.png';
 
-    try {
-        await context.replyWithPhoto(photoPath, { caption: 'test image' });
-    } catch (error) {
-        console.log(error.message);
-    }
-    
-    await context.reply(placeholder.greetingsText(context.from.username), Markup.removeKeyboard());
+    await context.replyWithPhoto(images.avatarImage,
+        {
+            caption: placeholder.greetingsText(context.from.username),
+            parse_mode: 'Markdown'
+        });
 
     if (userId === parseInt(process.env.ADMINS)) {
         context.scene.enter('ADMIN_SCENE');
