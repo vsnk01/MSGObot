@@ -6,9 +6,10 @@ import { createApplication } from "../utils/createApplication.js";
 import * as placeholder from "../api/placeholders.js";
 
 export const applicationScene = new Scenes.BaseScene("APPLICATION_SCENE");
+const IMAGE_PATH = path.join(process.cwd(),'src/img/title.png');
 
 applicationScene.enter(async (context) => {
-  context.replyWithPhoto('../img/title.png', { caption: placeholder.joinTeamText });
+  context.replyWithPhoto(IMAGE_PATH, { caption: placeholder.joinTeamText });
   context.session.timeout = createTimer(context);
   context.session.currentQuestion = 0;
   context.session.answers = [];

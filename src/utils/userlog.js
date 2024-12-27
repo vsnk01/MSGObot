@@ -1,9 +1,11 @@
 import fs from 'fs';
+import path from 'path';
 const PATH = '../data/applicants.json';
+const FILEPATH = path.join(process.cwd(),'src/data/applicants.json');
 
 export const getUserData = () => {
-    if (fs.existsSync(PATH)) {
-        const rawData = fs.readFileSync(PATH, 'utf-8');
+    if (fs.existsSync(FILEPATH)) {
+        const rawData = fs.readFileSync(FILEPATH, 'utf-8');
 
         if (rawData) {
             const data = JSON.parse(rawData);
@@ -31,6 +33,6 @@ export const saveUserData = (context, query, date) => {
 
     users.push(userLog);
 
-    fs.writeFileSync(PATH, JSON.stringify(users, null, 2), 'utf-8');
+    fs.writeFileSync(FILEPATH, JSON.stringify(users, null, 2), 'utf-8');
 }
 
