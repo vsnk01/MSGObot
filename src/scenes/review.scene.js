@@ -1,3 +1,4 @@
+import { Scenes} from 'telegraf';
 import { getUserData } from "../utils/userlog.js";
 import { createApplication } from "../utils/createApplication.js";
 
