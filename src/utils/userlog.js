@@ -5,15 +5,19 @@ import { redis } from '../kvClient.js';
 // const FILEPATH = path.join(process.cwd(),'src/data/applicants.json');
 
 export const getUsersData = async () => {
-    const keys = await redis.keys('applicant:*');
+    const users = [];
 
-    const data = [];
+    try {
+        const keys = await redis.keys('applicant:*');
+    
+        for (const key of keys) {
+            const value = await redis.get(key);
+            users.push(JSON.parse(value));
+        }
 
-    for (const key of keys) {
-        const value = await redis.get(key);
-        data.push({ key, value });
+    } catch (error) {
+        console.log(error.message); 
     }
-
     // if (fs.existsSync(FILEPATH)) {
     //     const rawData = fs.readFileSync(FILEPATH, 'utf-8');
 
@@ -34,14 +38,18 @@ export const getUsersData = async () => {
 export const saveUserData = async (context, query, date) => {
     // const users = getUserData();
 
-    const userLog = {
-        userId: context.from.id,
-        username: context.from.username,
-        query,
-        date,
-    };
-
-    await redis.set(`applicant:${userLog.userId}`, JSON.stringify(userLog));
+    try {
+        const userLog = {
+            userId: context.from.id,
+            username: context.from.username,
+            query,
+            date,
+        };
+    
+        await redis.set(`applicant:${userLog.userId}`, JSON.stringify(userLog));
+    } catch (error) {
+        console.log(error.message); 
+    }
 
     // users.push(userLog);
 
