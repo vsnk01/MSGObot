@@ -7,12 +7,12 @@ export const adminScene = new Scenes.BaseScene('ADMIN_SCENE');
 adminScene.enter(async (context) => {
     context.session.timeout = createTimer(context);
 
-    adminScene.action('review', proceed((context) => context.scene.enter('REVIEW_APPLICATIONS_SCENE')));
-        
-    adminScene.action('news', proceed((context) => {
-        context.answerCbQuery();
-        context.reply(placeholder.errorText);
+    adminScene.action('review', proceed(async (context) => {
+            await context.answerCbQuery();
+            await context.scene.enter("REVIEW_APPLICATIONS_SCENE");
     }));
+        
+    adminScene.action('news', proceed(async (context) => context.reply(placeholder.errorText)));
 
     const keyboard = Markup.inlineKeyboard([
                 Markup.button.callback(placeholder.reviewButtonText, "review"),

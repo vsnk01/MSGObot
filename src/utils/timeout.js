@@ -9,7 +9,7 @@ export const createTimer = (context) => setTimeout(() => {
     }
 }, TIMEOUT);
 
-export const proceed =  (handler) => async(context) => {
+export const proceed = (handler) => async (context) => {
     console.log(context.session.timeout);
     clearTimeout(context.session.timeout);
     await handler(context);
