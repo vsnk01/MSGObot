@@ -19,7 +19,7 @@ const enterCustomDialog = async (context, userId, username) => {
         console.log(userId);
         
         if (adminContext.from.id === admin && context.session.dialogActive) {
-            
+
             if (adminContext.message.text === placeholder.endChatButtonText) {
                 adminContext.session.dialogActive = false;
                 await adminContext.reply('Dialog ended', Markup.removeKeyboard());
@@ -41,6 +41,7 @@ const enterCustomDialog = async (context, userId, username) => {
             //     userContext.session = null;
             //     return userContext.scene.leave();
             // }
+            
             await bot.telegram.sendMessage(admin, `Message from: @${userContext.from.username}\n\n ${userContext.message.text}`);   
         }
     });
