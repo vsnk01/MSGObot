@@ -5,22 +5,26 @@ import * as placeholder from '../api/placeholders.js';
 export const dialogScene = new Scenes.BaseScene('DIALOG_SCENE');
 
 dialogScene.on('message', async (context) => {
+
+    console.log(context.session.adminId);
+    console.log(context.session.user.userId);
+
+
     if (context.session.dialogActive) {
-        if (context.from.id === context.session.userId) {
+        if (context.from.id === context.session.user.userId) {
             await bot.telegram.sendMessage(context.session.adminId, context.message.text);
         }
 
         if (context.from.id === context.session.adminId) {
             if (context.message.text === placeholder.endDialogButtonText) {
                 await context.reply('Dialog ended', Markup.removeKeyboard());
-                await bot.telegram.sendMessage(context.session.userId, placeholder.leftChatText('MSGO'));
+                await bot.telegram.sendMessage(context.session.user.userId, placeholder.leftChatText('MSGO'));
                 await context.scene.leave();
             }
 
-            await bot.telegram.sendMessage(context.session.userId, context.message.text);
+            await bot.telegram.sendMessage(context.session.user.userId, context.message.text);
         }
     }
-    
     // if (adminContext.from.id === context.session.adminId
     //     && context.session.dialogActive) {
 
@@ -46,7 +50,6 @@ const enterCustomDialog = async (context) => {
 
     await context.reply(`Your next messages will be sent directly to @${username}`, customKeyboard);
     await bot.telegram.sendMessage(userId, placeholder.joinChatText('MSGO'));
-
     // bot.hears(/.*/, async (userContext) => {
     //     if (userContext.from.id === userId
     //         && context.session.dialogActive) {
@@ -88,8 +91,8 @@ dialogScene.action('sendCustom', async (context) => {
 });
 
 dialogScene.action('approve2', async (context) => {
-    const { userId } = context.scene.state;
-    await bot.telegram.sendMessage(userId, placeholder.approve2Text);
+    // const { userId } = context.scene.state;
+    await bot.telegram.sendMessage(context.session.user.userId, placeholder.approve2Text);
     await enterCustomDialog(context);
     // await context.answerCbQuery();
     // await context.scene.leave();
@@ -98,7 +101,7 @@ dialogScene.action('approve2', async (context) => {
 
 dialogScene.action('approve3', async (context) => {
     const { userId } = context.scene.state;
-    await bot.telegram.sendMessage(userId, placeholder.approve3Text);
+    await bot.telegram.sendMessage(context.session.user.userId, placeholder.approve3Text);
     await enterCustomDialog(context);
     await context.answerCbQuery();
     // await context.scene.leave();
@@ -107,14 +110,14 @@ dialogScene.action('approve3', async (context) => {
 
 dialogScene.action('wait', async (context) => {
     const { userId } = context.scene.state;
-    await bot.telegram.sendMessage(userId, placeholder.waitText);
+    await bot.telegram.sendMessage(context.session.user.userId, placeholder.waitText);
     await context.scene.leave();
     await context.answerCbQuery();
 });
 
 dialogScene.action('requestExamples', async (context) => {
     const { userId } = context.scene.state;
-    await bot.telegram.sendMessage(userId, placeholder.requestExamplesText);
+    await bot.telegram.sendMessage(context.session.user.userId, placeholder.requestExamplesText);
     await enterCustomDialog(context);
     await context.answerCbQuery();
     // context.scene.leave();
@@ -134,21 +137,21 @@ dialogScene.action('reject', async (context) => {
 
 dialogScene.action('noExamples', async (context) => {
     const { userId } = context.scene.state;
-    await bot.telegram.sendMessage(userId, placeholder.rejectExamplesText);
+    await bot.telegram.sendMessage(context.session.user.userId, placeholder.rejectExamplesText);
     await context.scene.leave();
     await context.answerCbQuery();
 });
 
 dialogScene.action('notRelevant', async (context) => {
     const { userId } = context.scene.state;
-    await bot.telegram.sendMessage(userId, placeholder.rejectRelevantText);
+    await bot.telegram.sendMessage(context.session.user.userId, placeholder.rejectRelevantText);
     await context.scene.leave();
     await context.answerCbQuery();
 });
 
 dialogScene.action('warn', async (context) => {
     const { userId } = context.scene.state;
-    await bot.telegram.sendMessage(userId, placeholder.warnText);
+    await bot.telegram.sendMessage(context.session.user.userId, placeholder.warnText);
     await context.scene.leave();
     await context.answerCbQuery();
 });
