@@ -1,5 +1,6 @@
 import { bot } from './bot.js';
 import express from 'express';
+import { token } from './connections/token.connection.js';
 import { registerActions } from './registration/registration.js';
 
 // const app = express();
@@ -9,7 +10,7 @@ registerActions();
 
 console.log('done');
 
-const SECRET_PATH = '/webhook';
+const SECRET_PATH = `/webhook/${token}`;
 const WEBHOOK_URL = `https://${process.env.VERCEL_URL}${SECRET_PATH}`;
 
 const app = express();
