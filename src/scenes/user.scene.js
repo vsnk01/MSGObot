@@ -10,7 +10,7 @@
         userScene.action('partnership', proceed((context) =>
             context.reply('К сожалению, эта функция ещё не была добавлена или требует исправлений. Обратитесь к @fukuro_dz')));
         userScene.action('faq', proceed((context) =>
-            context.reply('К сожалению, эта функция ещё не была добавлена или требует исправлений. Обратитесь к @fukuro_dz')));
+            context.scene.enter("FAQ_SCENE")));
     
         const keyboard = Markup.inlineKeyboard([
             Markup.button.callback("Вступление в команду", "apply"),
