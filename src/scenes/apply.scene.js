@@ -6,7 +6,7 @@ import { createApplication } from "../utils/createApplication.js";
 import * as placeholder from "../api/placeholders.js";
 
 export const applicationScene = new Scenes.BaseScene("APPLICATION_SCENE");
-const IMAGE_PATH = '/public/img/title.png';
+const IMAGE_PATH = 'public/img/title.png';
 
 applicationScene.enter(async (context) => {
   context.session.timeout = createTimer(context);
