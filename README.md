@@ -1,5 +1,15 @@
 MSGO bot v.1.0.1
 
+
+UPDATE:
+
+TO FIX:
+
+- Date validation
+- Spacing
+- Implement Partnership button
+- Fix 'undefined' user issue
+
 About:
 
 Greetings!
