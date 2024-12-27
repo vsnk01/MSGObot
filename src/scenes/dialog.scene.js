@@ -33,7 +33,7 @@ dialogScene.enter(async (context) => {
                 if (userContext.message.text === 'End chat') {
                     context.session.dialogActive = false;
                     await  userContext.reply('Chat ended', Markup.removeKeyboard());
-                    await bot.telegram.sendMessage(admin, `@${userContext.from.username} left the chat`);
+                    await bot.telegram.sendMessage(admin, `@${userContext.from.username} left the chat`, Markup.removeKeyboard());
                     userContext.session = null;
                     return userContext.scene.leave();
                 }
