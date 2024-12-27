@@ -15,7 +15,7 @@ export const getUsersData = async () => {
 
             if (value) {
                 const parsedValue = JSON.parse(value);
-            users.push(parsedValue);
+                users.push(parsedValue);
             }
         }
 
@@ -52,6 +52,8 @@ export const saveUserData = async (context, query, date) => {
         };
     
         await redis.set(`applicant:${userLog.userId}`, JSON.stringify(userLog));
+        console.log('User data saved');
+        console.log(redis.get(`applicant:${userLog.userId}`));
     } catch (error) {
         console.log(error.message); 
     }
