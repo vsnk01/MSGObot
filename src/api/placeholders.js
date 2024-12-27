@@ -1,6 +1,6 @@
 // Welcome
 
-export const greetingsText = (username) =>`Привет **${username && '@' + username}**! Я бот сообщества MSGO.`;
+export const greetingsText = (username) =>`Привет <b>${username && '@' + username}</b>! Я бот сообщества MSGO.`;
 
 // Help placeholder
 

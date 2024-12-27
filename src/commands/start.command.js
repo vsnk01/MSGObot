@@ -10,7 +10,7 @@ export const startCommand = (async (context) => {
     await context.replyWithPhoto(images.avatarImage,
         {
             caption: placeholder.greetingsText(context.from.username),
-            parse_mode: 'Markdown'
+            parse_mode: 'HTML'
         });
 
     if (userId === parseInt(process.env.ADMINS)) {
