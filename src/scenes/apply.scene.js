@@ -1,5 +1,3 @@
-import path from 'path';
-
 import { Markup, Scenes } from "telegraf";
 import { questions } from "../api/application.js";
 import { saveUserData } from "../utils/userlog.js";
@@ -8,7 +6,7 @@ import { createApplication } from "../utils/createApplication.js";
 import * as placeholder from "../api/placeholders.js";
 
 export const applicationScene = new Scenes.BaseScene("APPLICATION_SCENE");
-const IMAGE_PATH = '/img/title.png'
+const IMAGE_PATH = '/public/img/title.png';
 
 applicationScene.enter(async (context) => {
   context.session.timeout = createTimer(context);
