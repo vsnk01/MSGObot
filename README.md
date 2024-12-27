@@ -2,6 +2,7 @@ MSGO bot v.1.0.1
 
 
 UPDATE:
+Updated bot version will be pushed next day (28.12.24). Consider that current rep is outdated
 
 TO FIX:
 
