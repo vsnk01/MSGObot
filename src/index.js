@@ -10,7 +10,7 @@ registerActions();
 
 console.log('done');
 
-const SECRET_PATH = `/webhook/${token}`;
+const SECRET_PATH = `/${token}`;
 const WEBHOOK_URL = `https://${process.env.VERCEL_URL}${SECRET_PATH}`;
 
 const app = express();
