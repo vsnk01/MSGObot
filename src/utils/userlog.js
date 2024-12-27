@@ -1,5 +1,5 @@
 import fs from 'fs';
-const PATH = './src/data/applicants.json';
+const PATH = '../data/applicants.json';
 
 export const getUserData = () => {
     if (fs.existsSync(PATH)) {
