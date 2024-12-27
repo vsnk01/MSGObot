@@ -1,4 +1,6 @@
 import { Markup, Scenes } from "telegraf";
+import fs from 'fs';
+import path from 'path';
 import { questions } from "../api/application.js";
 import { saveUserData } from "../utils/userlog.js";
 import { createTimer, proceed } from "../utils/timeout.js";
@@ -6,7 +8,7 @@ import { createApplication } from "../utils/createApplication.js";
 import * as placeholder from "../api/placeholders.js";
 
 export const applicationScene = new Scenes.BaseScene("APPLICATION_SCENE");
-const IMAGE_PATH = 'public/img/title.png';
+const IMAGE_PATH = path.join(__dirname, '../../public/img/title.png');
 
 applicationScene.enter(async (context) => {
   context.session.timeout = createTimer(context);
@@ -14,7 +16,7 @@ applicationScene.enter(async (context) => {
   context.session.answers = [];
 
   await context.replyWithPhoto(
-    { url: IMAGE_PATH },
+    { source: fs.createReadStream(IMAGE_PATH) },
     { caption: placeholder.joinTeamText }
   );
 

@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-const PATH = '../data/applicants.json';
 const FILEPATH = path.join(process.cwd(),'src/data/applicants.json');
 
 export const getUserData = () => {
