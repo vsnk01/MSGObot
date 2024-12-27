@@ -4,7 +4,7 @@ import * as placeholder from '../api/placeholders.js';
 
 export const dialogScene = new Scenes.BaseScene('DIALOG_SCENE');
 
-dialogScene.on('message', async (context) => {
+bot.on('message', async (context) => {
 
     console.log(context.session.adminId);
     console.log(context.session.user.userId);
@@ -25,6 +25,7 @@ dialogScene.on('message', async (context) => {
             await bot.telegram.sendMessage(context.session.user.userId, context.message.text);
         }
     }
+});
     // if (adminContext.from.id === context.session.adminId
     //     && context.session.dialogActive) {
 
@@ -38,11 +39,12 @@ dialogScene.on('message', async (context) => {
 
     //     await bot.telegram.sendMessage(userId, adminContext.message.text);
     // }
-});
+
 
 const enterCustomDialog = async (context) => {
     context.session.adminId = context.from.id;
     context.session.dialogActive = true;
+
     const customKeyboard = Markup.keyboard([
         [placeholder.endDialogButtonText]
     ]);
