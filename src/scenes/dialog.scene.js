@@ -20,9 +20,9 @@ dialogScene.on('message', async (context) => {
                 await context.reply('Dialog ended', Markup.removeKeyboard());
                 await bot.telegram.sendMessage(context.session.user.userId, placeholder.leftChatText('MSGO'));
                 await context.scene.leave();
+            } else {
+                await bot.telegram.sendMessage(context.session.user.userId, context.message.text);
             }
-
-            await bot.telegram.sendMessage(context.session.user.userId, context.message.text);
         }
     }
 });
