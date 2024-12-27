@@ -110,3 +110,11 @@ const sendApplication = async (answers, context) => {
 
   return context.scene.enter('USER_SCENE');
 };
+
+applicationScene.leave((context) => {
+  if (context.session?.timeout) {
+    clearTimeout(context.session.timeout);
+  }
+  context.session.currentQuestion = null;
+  context.session.answers = null;
+});

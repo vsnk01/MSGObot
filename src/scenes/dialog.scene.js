@@ -1,131 +1,160 @@
 import { Markup, Scenes } from "telegraf";
-import { bot } from '../bot.js';
+import { bot, ADMIN } from '../bot.js';
 import * as placeholder from '../api/placeholders.js';
 
 export const dialogScene = new Scenes.BaseScene('DIALOG_SCENE');
 
-const enterCustomDialog = async (context, userId, username) => {
-    const admin = context.from.id;
+dialogScene.on('message', async (context) => {
+    if (context.session.dialogActive) {
+        if (context.from.id === context.session.userId) {
+            await bot.telegram.sendMessage(context.session.adminId, context.message.text);
+        }
+
+        if (context.from.id === context.session.adminId) {
+            if (context.message.text === placeholder.endDialogButtonText) {
+                await context.reply('Dialog ended', Markup.removeKeyboard());
+                await bot.telegram.sendMessage(context.session.userId, placeholder.leftChatText('MSGO'));
+                await context.scene.leave();
+            }
+
+            await bot.telegram.sendMessage(context.session.userId, context.message.text);
+        }
+    }
+    
+    // if (adminContext.from.id === context.session.adminId
+    //     && context.session.dialogActive) {
+
+    //     if (adminContext.message.text === placeholder.endChatButtonText) {
+    //         adminContext.session.dialogActive = false;
+    //         await adminContext.reply('Dialog ended', Markup.removeKeyboard());
+    //         await bot.telegram.sendMessage(userId, placeholder.leftChatText('MSGO'));
+    //         context.session = null;
+    //         return context.scene.leave();
+    //     }
+
+    //     await bot.telegram.sendMessage(userId, adminContext.message.text);
+    // }
+});
+
+const enterCustomDialog = async (context) => {
+    context.session.dialogActive = true;
+    context.session.adminId = context.from.id;
 
     const customKeyboard = Markup.keyboard([
         [placeholder.endDialogButtonText]
     ]);
 
     await context.reply(`Your next messages will be sent directly to @${username}`, customKeyboard);
-    
     await bot.telegram.sendMessage(userId, placeholder.joinChatText('MSGO'));
 
-    dialogScene.on('message', async (adminContext) => {
-        console.log(userId);
-        
-        if (adminContext.from.id === admin && context.session.dialogActive) {
-
-            if (adminContext.message.text === placeholder.endChatButtonText) {
-                adminContext.session.dialogActive = false;
-                await adminContext.reply('Dialog ended', Markup.removeKeyboard());
-                await bot.telegram.sendMessage(userId, placeholder.leftChatText('MSGO'));
-                context.session = null;
-                return context.scene.leave();
-            }
-
-            await bot.telegram.sendMessage(userId, adminContext.message.text);
-        }
-    });
-
-    bot.hears(/.*/, async (userContext) => {
-        if (userContext.from.id === userId && context.session.dialogActive) {
-            // if (userContext.message.text === 'End chat') {
-            //     context.session.dialogActive = false;
-            //     await  userContext.reply('Chat ended', Markup.removeKeyboard());
-            //     await bot.telegram.sendMessage(admin, `@${userContext.from.username} left the chat`, Markup.removeKeyboard());
-            //     userContext.session = null;
-            //     return userContext.scene.leave();
-            // }
-            
-            await bot.telegram.sendMessage(admin, `Message from: @${userContext.from.username}\n\n ${userContext.message.text}`);   
-        }
-    });
+    // bot.hears(/.*/, async (userContext) => {
+    //     if (userContext.from.id === userId
+    //         && context.session.dialogActive) {
+    //         await bot.telegram.sendMessage(context.session.adminId, `Message from: @${userContext.from.username}\n\n ${userContext.message.text}`);   
+    //         // if (userContext.message.text === 'End chat') {
+    //         //     context.session.dialogActive = false;
+    //         //     await  userContext.reply('Chat ended', Markup.removeKeyboard());
+    //         //     await bot.telegram.sendMessage(admin, `@${userContext.from.username} left the chat`, Markup.removeKeyboard());
+    //         //     userContext.session = null;
+    //         //     return userContext.scene.leave();
+    //         // }
+    //     }
+    // });
 };
 
 dialogScene.enter(async (context) => {
     const { userId, username } = context.scene.state;
-    context.session.dialogActive = true;
 
-    const keyboard = Markup.inlineKeyboard([
-        [Markup.button.callback(placeholder.approve2ButtonText, 'approve2')],
-        [Markup.button.callback(placeholder.approve3ButtonText, 'approve3')],
-        [Markup.button.callback(placeholder.waitButtonText, 'wait')],
-        [Markup.button.callback(placeholder.rejectButtonText, 'requestExamples')],
-        [Markup.button.callback(placeholder.requestButtonText, 'reject')],
-        [Markup.button.callback(placeholder.warnButtonText, 'warn')],
-        [Markup.button.callback(placeholder.customButtonText, 'sendCustom')],
+    context.session.dialogActive = false;
+    context.session.user = { userId, username };
+
+    if (context.from.id === ADMIN) {
+        const keyboard = Markup.inlineKeyboard([
+            [Markup.button.callback(placeholder.approve2ButtonText, 'approve2')],
+            [Markup.button.callback(placeholder.approve3ButtonText, 'approve3')],
+            [Markup.button.callback(placeholder.waitButtonText, 'wait')],
+            [Markup.button.callback(placeholder.rejectButtonText, 'requestExamples')],
+            [Markup.button.callback(placeholder.requestButtonText, 'reject')],
+            [Markup.button.callback(placeholder.warnButtonText, 'warn')],
+            [Markup.button.callback(placeholder.customButtonText, 'sendCustom')],
+        ]);
+    
+        await context.reply(`What do you want to say to ${username}`, keyboard);
+    }
+});
+
+dialogScene.action('sendCustom', async (context) => {
+    await enterCustomDialog(context);
+});
+
+dialogScene.action('approve2', async (context) => {
+    const { userId } = context.scene.state;
+    await bot.telegram.sendMessage(userId, placeholder.approve2Text);
+    await enterCustomDialog(context);
+    await context.answerCbQuery();
+    // await context.scene.leave();
+    // context.session = null;
+});
+
+dialogScene.action('approve3', async (context) => {
+    const { userId } = context.scene.state;
+    await bot.telegram.sendMessage(userId, placeholder.approve3Text);
+    await enterCustomDialog(context);
+    await context.answerCbQuery();
+    // await context.scene.leave();
+    // context.session = null;
+});
+
+dialogScene.action('wait', async (context) => {
+    const { userId } = context.scene.state;
+    await bot.telegram.sendMessage(userId, placeholder.waitText);
+    await context.scene.leave();
+    await context.answerCbQuery();
+});
+
+dialogScene.action('requestExamples', async (context) => {
+    const { userId } = context.scene.state;
+    await bot.telegram.sendMessage(userId, placeholder.requestExamplesText);
+    await enterCustomDialog(context);
+    await context.answerCbQuery();
+    // context.scene.leave();
+    // context.session = null;
+});
+
+dialogScene.action('reject', async (context) => {
+    const { username } = context.scene.state;
+    const rejectKeyboard = Markup.inlineKeyboard([
+        [Markup.button.callback(placeholder.noExamplesButtonText, 'noExamples')],
+        [Markup.button.callback(placeholder.notRelevantButtonText, 'notRelevant')],
     ]);
 
-    dialogScene.action('sendCustom', async (contextСustom) => {
-        await enterCustomDialog(context, userId);
-    });
+    await context.reply(`Choose the reason of rejection for ${username}`, rejectKeyboard);
+    await context.answerCbQuery();
+});
 
-    dialogScene.action('approve2', async (contextApprove2) => {
-        await bot.telegram.sendMessage(userId, placeholder.approve2Text);
-        await contextApprove2.answerCbQuery();
-        await enterCustomDialog(context, userId, username);
-        // await context.scene.leave();
-        // context.session = null;
-    });
+dialogScene.action('noExamples', async (context) => {
+    const { userId } = context.scene.state;
+    await bot.telegram.sendMessage(userId, placeholder.rejectExamplesText);
+    await context.scene.leave();
+    await context.answerCbQuery();
+});
 
-    dialogScene.action('approve3', async (contextApprove3) => {
-        await bot.telegram.sendMessage(userId, placeholder.approve3Text);
-        await contextApprove3.answerCbQuery();
-        await enterCustomDialog(context, userId, username);
-        // await context.scene.leave();
-        // context.session = null;
-    });
+dialogScene.action('notRelevant', async (context) => {
+    const { userId } = context.scene.state;
+    await bot.telegram.sendMessage(userId, placeholder.rejectRelevantText);
+    await context.scene.leave();
+    await context.answerCbQuery();
+});
 
-    dialogScene.action('wait', async (contextWait) => {
-        await bot.telegram.sendMessage(userId, placeholder.waitText);
-        await contextWait.answerCbQuery();
-        await context.scene.leave();
-        context.session = null;
-    });
+dialogScene.action('warn', async (context) => {
+    const { userId } = context.scene.state;
+    await bot.telegram.sendMessage(userId, placeholder.warnText);
+    await context.scene.leave();
+    await context.answerCbQuery();
+});
 
-    dialogScene.action('requestExamples', async (contextRequest) => {
-        await bot.telegram.sendMessage(userId, placeholder.requestExamplesText);
-        await contextRequest.answerCbQuery();
-        await enterCustomDialog(context, userId, username);
-        // context.scene.leave();
-        // context.session = null;
-    });
-
-    dialogScene.action('reject', async (contextReject) => {
-        const rejectKeyboard = Markup.inlineKeyboard([
-            [Markup.button.callback(placeholder.noExamplesButtonText, 'noExamples')],
-            [Markup.button.callback(placeholder.notRelevantButtonText, 'notRelevant')],
-        ]);
-
-        await contextReject.answerCbQuery();
-        await contextReject.reply(`Choose the reason of rejection for ${username}`, rejectKeyboard);
-    });
-
-    dialogScene.action('noExamples', async (contextExamples) => {
-        await bot.telegram.sendMessage(userId, placeholder.rejectExamplesText);
-        await contextExamples.answerCbQuery();
-        await context.scene.leave();
-        context.session = null;
-    });
-
-    dialogScene.action('notRelevant', async (contextRelevant) => {
-        await bot.telegram.sendMessage(userId, placeholder.rejectRelevantText);
-        await contextRelevant.answerCbQuery();
-        await context.scene.leave();
-        context.session = null; 
-    });
-
-    dialogScene.action('warn', async (contextWarn) => {
-        await bot.telegram.sendMessage(userId, placeholder.warnText);
-        await contextWarn.answerCbQuery();
-        await context.scene.leave();
-        context.session = null;
-    });
-
-    await context.reply(`What do you want to say to ${username}`, keyboard);
+dialogScene.leave((context) => {
+    context.session.dialogActive = false;
+    context.session.userId = null;
+    context.session.adminId = null;
 });
