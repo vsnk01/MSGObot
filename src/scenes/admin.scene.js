@@ -8,13 +8,17 @@ adminScene.enter(async (context) => {
     context.session.timeout = createTimer(context);
 
     adminScene.action('review', proceed((context) => {
-        context.scene.enter('REVIEW_APPLICATIONS_SCENE');
-        // context.answerCbQuery();
+        try {
+            context.answerCbQuery();
+            context.scene.enter('REVIEW_APPLICATIONS_SCENE');
+        } catch (error) {
+            context.reply(`${placeholder.errorText}: ${error.message}`);
+        }
     }));
         
     adminScene.action('news', proceed((context) => {
+        context.answerCbQuery();
         context.reply(placeholder.errorText);
-        // context.answerCbQuery();
     }));
 
     const keyboard = Markup.inlineKeyboard([
@@ -23,4 +27,10 @@ adminScene.enter(async (context) => {
             ]).resize();
 
     await context.reply(placeholder.adminSceneText(context.from.username), keyboard);
+});
+
+adminScene.leave((context) => {
+    if (context.session?.timeout) {
+        clearTimeout(context.session.timeout);
+    }
 });
