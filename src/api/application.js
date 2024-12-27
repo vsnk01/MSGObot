@@ -31,9 +31,9 @@ export const questions = [
             },
             {
                 id: 'date',
-                text: 'Дата рождения в формате хх.хх.хххх',
+                text: 'Дата рождения в формате хх/хх/хххх',
                 check: (date) => {
-                    const [day, month, year] = date.split('.').map(num => Number(num));
+                    const [day, month, year] = date.split('/').map(num => Number(num));
                     const parseDate = new Date(year, month - 1, day);
                                         
                     if (parseDate.getFullYear() !== year
