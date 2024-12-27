@@ -79,8 +79,8 @@ dialogScene.enter(async (context) => {
             [Markup.button.callback(placeholder.approve2ButtonText, 'approve2')],
             [Markup.button.callback(placeholder.approve3ButtonText, 'approve3')],
             [Markup.button.callback(placeholder.waitButtonText, 'wait')],
-            [Markup.button.callback(placeholder.rejectButtonText, 'requestExamples')],
-            [Markup.button.callback(placeholder.requestButtonText, 'reject')],
+            [Markup.button.callback(placeholder.rejectButtonText, 'reject')],
+            [Markup.button.callback(placeholder.requestButtonText, 'requestExamples')],
             [Markup.button.callback(placeholder.warnButtonText, 'warn')],
             [Markup.button.callback(placeholder.customButtonText, 'sendCustom')],
         ]);
@@ -94,7 +94,6 @@ dialogScene.action('sendCustom', async (context) => {
 });
 
 dialogScene.action('approve2', async (context) => {
-    // const { userId } = context.scene.state;
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.approve2Text);
     await enterCustomDialog(context);
     // await context.answerCbQuery();
@@ -103,7 +102,6 @@ dialogScene.action('approve2', async (context) => {
 });
 
 dialogScene.action('approve3', async (context) => {
-    const { userId } = context.scene.state;
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.approve3Text);
     await enterCustomDialog(context);
     await context.answerCbQuery();
@@ -112,14 +110,12 @@ dialogScene.action('approve3', async (context) => {
 });
 
 dialogScene.action('wait', async (context) => {
-    const { userId } = context.scene.state;
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.waitText);
     await context.scene.leave();
     await context.answerCbQuery();
 });
 
 dialogScene.action('requestExamples', async (context) => {
-    const { userId } = context.scene.state;
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.requestExamplesText);
     await enterCustomDialog(context);
     await context.answerCbQuery();
@@ -128,32 +124,28 @@ dialogScene.action('requestExamples', async (context) => {
 });
 
 dialogScene.action('reject', async (context) => {
-    const { username } = context.scene.state;
     const rejectKeyboard = Markup.inlineKeyboard([
         [Markup.button.callback(placeholder.noExamplesButtonText, 'noExamples')],
         [Markup.button.callback(placeholder.notRelevantButtonText, 'notRelevant')],
     ]);
 
-    await context.reply(`Choose the reason of rejection for ${username}`, rejectKeyboard);
+    await context.reply(`Choose the reason of rejection for ${context.session.user.username}`, rejectKeyboard);
     await context.answerCbQuery();
 });
 
 dialogScene.action('noExamples', async (context) => {
-    const { userId } = context.scene.state;
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.rejectExamplesText);
     await context.scene.leave();
     await context.answerCbQuery();
 });
 
 dialogScene.action('notRelevant', async (context) => {
-    const { userId } = context.scene.state;
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.rejectRelevantText);
     await context.scene.leave();
     await context.answerCbQuery();
 });
 
 dialogScene.action('warn', async (context) => {
-    const { userId } = context.scene.state;
     await bot.telegram.sendMessage(context.session.user.userId, placeholder.warnText);
     await context.scene.leave();
     await context.answerCbQuery();
