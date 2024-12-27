@@ -4,19 +4,20 @@ import { saveUserData } from "../utils/userlog.js";
 import { createTimer, proceed } from "../utils/timeout.js";
 import { createApplication } from "../utils/createApplication.js";
 import * as placeholder from "../api/placeholders.js";
+import * as images from '../img/image.links.js';
 
 export const applicationScene = new Scenes.BaseScene("APPLICATION_SCENE");
-// const IMAGE_PATH = '../../public/img/title.png';
 
 applicationScene.enter(async (context) => {
   context.session.timeout = createTimer(context);
   context.session.currentQuestion = 0;
   context.session.answers = [];
 
-  // await context.replyWithPhoto(
-  //   { photo: IMAGE_PATH },
-  //   { caption: placeholder.joinTeamText }
-  // );
+  await context.replyWithPhoto(images.titleImage,
+    {
+        caption: placeholder.joinTeamText,
+        parse_mode: 'HTML'
+    });
 
   context.session.answers[context.session.currentQuestion] = {
     question: await askQuestion(0, context),
