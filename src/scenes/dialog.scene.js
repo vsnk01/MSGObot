@@ -8,25 +8,24 @@ const enterCustomDialog = async (context, userId, username) => {
     const admin = context.from.id;
 
     const customKeyboard = Markup.keyboard([
-        ['End dialog']
+        [placeholder.endDialogButtonText]
     ]);
 
     await context.reply(`Your next messages will be sent directly to @${username}`, customKeyboard);
-    await bot.telegram.sendMessage(userId, placeholder.joinChatText('MSGO'),  { reply_markup: {
-        keyboard: [[{ text: placeholder.endChatButtonText }]],
-        resize_keyboard: true,
-    }});
+    
+    await bot.telegram.sendMessage(userId, placeholder.joinChatText('MSGO'));
 
     dialogScene.on('message', async (adminContext) => {
         console.log(userId);
         
-        if (context.session.dialogActive) {
+        if (adminContext.from.id === admin && context.session.dialogActive) {
+            
             if (adminContext.message.text === placeholder.endChatButtonText) {
                 adminContext.session.dialogActive = false;
                 await adminContext.reply('Dialog ended', Markup.removeKeyboard());
-                await bot.telegram.sendMessage(userId, placeholder.leftChatText('MSGO'), Markup.removeKeyboard());
-                adminContext.session = null;
-                return adminContext.scene.leave();
+                await bot.telegram.sendMessage(userId, placeholder.leftChatText('MSGO'));
+                context.session = null;
+                return context.scene.leave();
             }
 
             await bot.telegram.sendMessage(userId, adminContext.message.text);
@@ -61,69 +60,69 @@ dialogScene.enter(async (context) => {
         [Markup.button.callback(placeholder.customButtonText, 'sendCustom')],
     ]);
 
-    dialogScene.action('sendCustom', async (context) => {
+    dialogScene.action('sendCustom', async (contextСustom) => {
         await enterCustomDialog(context, userId);
     });
 
-    dialogScene.action('approve2', async (context) => {
+    dialogScene.action('approve2', async (contextApprove2) => {
         await bot.telegram.sendMessage(userId, placeholder.approve2Text);
-        await context.answerCbQuery();
+        await contextApprove2.answerCbQuery();
         await enterCustomDialog(context, userId, username);
         // await context.scene.leave();
         // context.session = null;
     });
 
-    dialogScene.action('approve3', async (context) => {
+    dialogScene.action('approve3', async (contextApprove3) => {
         await bot.telegram.sendMessage(userId, placeholder.approve3Text);
-        await context.answerCbQuery();
+        await contextApprove3.answerCbQuery();
         await enterCustomDialog(context, userId, username);
         // await context.scene.leave();
         // context.session = null;
     });
 
-    dialogScene.action('wait', async (context) => {
+    dialogScene.action('wait', async (contextWait) => {
         await bot.telegram.sendMessage(userId, placeholder.waitText);
-        await context.answerCbQuery();
+        await contextWait.answerCbQuery();
         await context.scene.leave();
         context.session = null;
     });
 
-    dialogScene.action('requestExamples', async (context) => {
+    dialogScene.action('requestExamples', async (contextRequest) => {
         await bot.telegram.sendMessage(userId, placeholder.requestExamplesText);
-        await context.answerCbQuery();
+        await contextRequest.answerCbQuery();
         await enterCustomDialog(context, userId, username);
         // context.scene.leave();
         // context.session = null;
     });
 
-    dialogScene.action('reject', async (context) => {
+    dialogScene.action('reject', async (contextReject) => {
         const rejectKeyboard = Markup.inlineKeyboard([
             [Markup.button.callback(placeholder.noExamplesButtonText, 'noExamples')],
             [Markup.button.callback(placeholder.notRelevantButtonText, 'notRelevant')],
         ]);
 
-        await context.answerCbQuery();
-        await context.reply(`Choose the reason of rejection for ${username}`, rejectKeyboard);
+        await contextReject.answerCbQuery();
+        await contextReject.reply(`Choose the reason of rejection for ${username}`, rejectKeyboard);
     });
 
-    dialogScene.action('noExamples', async (context) => {
+    dialogScene.action('noExamples', async (contextExamples) => {
         await bot.telegram.sendMessage(userId, placeholder.rejectExamplesText);
+        await contextExamples.answerCbQuery();
         await context.scene.leave();
-        await context.answerCbQuery();
         context.session = null;
     });
 
-    dialogScene.action('notRelevant', async (context) => {
+    dialogScene.action('notRelevant', async (contextRelevant) => {
         await bot.telegram.sendMessage(userId, placeholder.rejectRelevantText);
+        await contextRelevant.answerCbQuery();
         await context.scene.leave();
-        await context.answerCbQuery();
         context.session = null; 
     });
 
-    dialogScene.action('warn', async (context) => {
+    dialogScene.action('warn', async (contextWarn) => {
         await bot.telegram.sendMessage(userId, placeholder.warnText);
+        await contextWarn.answerCbQuery();
         await context.scene.leave();
-        await context.answerCbQuery();
         context.session = null;
     });
 

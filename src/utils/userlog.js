@@ -12,8 +12,6 @@ export const getUsersData = async () => {
             console.log(value);
 
             if (value) {
-                // const parsedValue = JSON.parse(value);
-                // console.log(parsedValue);
                 users.push(value);
             }
         }
@@ -25,23 +23,7 @@ export const getUsersData = async () => {
     return users;
 } 
 
-    // if (fs.existsSync(FILEPATH)) {
-    //     const rawData = fs.readFileSync(FILEPATH, 'utf-8');
-
-    //     if (rawData) {
-    //         const data = JSON.parse(rawData);
-
-    //         if (Array.isArray(data)) {
-    //             return data;
-    //         } else {
-    //             return [ data ];
-    //         }
-    //     }
-    // }
-
 export const saveUserData = async (context, query, date) => {
-    // const users = getUserData();
-
     try {
         const userLog = {
             userId: context.from.id,
@@ -60,9 +42,5 @@ export const saveUserData = async (context, query, date) => {
     } catch (error) {
         console.log(error.message); 
     }
-
-    // users.push(userLog);
-
-    // fs.writeFileSync(FILEPATH, JSON.stringify(users, null, 2), 'utf-8');
 }
 
