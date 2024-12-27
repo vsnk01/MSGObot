@@ -3,9 +3,6 @@ import express from 'express';
 import { token } from './connections/token.connection.js';
 import { registerActions } from './registration/registration.js';
 
-// const app = express();
-// const PORT = parseInt(process.env.PORT) || 3000;
-
 registerActions();
 
 console.log('done');
