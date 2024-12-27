@@ -6,17 +6,17 @@ import { createApplication } from "../utils/createApplication.js";
 import * as placeholder from "../api/placeholders.js";
 
 export const applicationScene = new Scenes.BaseScene("APPLICATION_SCENE");
-const IMAGE_PATH = '../../public/img/title.png';
+// const IMAGE_PATH = '../../public/img/title.png';
 
 applicationScene.enter(async (context) => {
   context.session.timeout = createTimer(context);
   context.session.currentQuestion = 0;
   context.session.answers = [];
 
-  await context.replyWithPhoto(
-    { photo: IMAGE_PATH },
-    { caption: placeholder.joinTeamText }
-  );
+  // await context.replyWithPhoto(
+  //   { photo: IMAGE_PATH },
+  //   { caption: placeholder.joinTeamText }
+  // );
 
   context.session.answers[context.session.currentQuestion] = {
     question: await askQuestion(0, context),
