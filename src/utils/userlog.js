@@ -5,7 +5,7 @@ import { redis } from '../kvClient.js';
 // const FILEPATH = path.join(process.cwd(),'src/data/applicants.json');
 
 export const getUsersData = async () => {
-    const keys = redis.keys('applicant:*');
+    const keys = await redis.keys('applicant:*');
 
     const data = [];
 
