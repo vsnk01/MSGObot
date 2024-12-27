@@ -1,17 +1,21 @@
+// Welcome
+
+export const greetingsText = (username) => `Привет @${username}! Я бот сообщества MSGO.`;
+
 // Error placeholder
 
 export const errorText = `Произошла ошибка. Попробуйте позже или обратитесь к администратору @fukuro_dz`;
 
 // User scene placeholder
 
-export const userSceneText = (username) => `Привет @${username}! Я бот сообщества MSGO. Чем могу помочь?`;
+export const userSceneText = (username) => `Чем могу помочь @${username}?`;
 export const applyButtonText = `Вступление в команду`;
 export const partnershipButtonText = `Партнёрство`;
 export const FAQButtonText = `FAQ`;
 
 // Admin scene placeholder
 
-export const adminSceneText = (username) => `Привет @${username}! Что прикажите делать?`;
+export const adminSceneText = (username) => `Что прикажите делать @${username}?`;
 
 export const reviewButtonText = `Просмотреть недавние запросы`;
 export const createNewsButtonText = `Создать рассылку`;
