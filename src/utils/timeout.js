@@ -1,4 +1,4 @@
-const TIMEOUT = 10000;
+const TIMEOUT = 50000;
 
 export const createTimer = (context) => setTimeout(() => {
     try {

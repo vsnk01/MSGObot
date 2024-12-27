@@ -48,6 +48,7 @@ const saveAnswer = async (context, answer) => {
       };
     } else {
       await sendApplication(context.session.answers, context);
+      context.session = null;
       await context.scene.leave();
     }
   } catch (error) {
