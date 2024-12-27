@@ -1,26 +1,30 @@
-MSGO bot v.1.0.1
+###MSGO bot v.1.0.1
 
+_____________________________________________________________
 
-UPDATE:
-Updated bot version will be pushed next day (28.12.24). Consider that current rep is outdated
+##TO FIX:
 
-TO FIX:
+_-✅ Date validation_
+_-✅ Spacing_
+_-🕙Implement Partnership button_
+_-✅ Fix 'undefined' user issue_
 
-- Date validation
-- Spacing
-- Implement Partnership button
-- Fix 'undefined' user issue
+_____________________________________________________________
 
-About:
+#About:
 
 Greetings!
 This small non-commercial project was developed for a friend of mine - the member of MSGO team,
 small but dedicated team of machinima creators.
 The goal was to develop a telegram bot for easy and fast way joining MSGO team.
 
-Tools:
+_____________________________________________________________
 
-- JavaScript
-- Telegraf v4
-- Express
-- Deployed on Vercel
+#Tools:
+
+_- JavaScript_
+_- Telegraf v4_
+_- Express_
+_- Deployed on Vercel_
+
+_____________________________________________________________
