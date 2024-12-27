@@ -14,12 +14,6 @@ adminScene.action('news', proceed(async (context) => {
     await context.reply(placeholder.errorText)
 }));
 
-adminScene.leave((context) => {
-    if (context.session?.timeout) {
-        clearTimeout(context.session.timeout);
-    }
-});
-
 adminScene.enter(async (context) => {
     context.session.timeout = createTimer(context);
 
@@ -29,4 +23,10 @@ adminScene.enter(async (context) => {
             ]).resize();
 
     await context.reply(placeholder.adminSceneText(context.from.username), keyboard);
+});
+
+adminScene.leave((context) => {
+    if (context.session?.timeout) {
+        clearTimeout(context.session.timeout);
+    }
 });
